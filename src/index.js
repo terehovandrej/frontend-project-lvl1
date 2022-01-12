@@ -86,6 +86,7 @@ export const goGame = (gameType) => {
         }
         console.log(`Question: ${question}`)
         let answer = readlineSync.question('Your answer: ');
+        console.log(`Your answer: ${answer}`)
         if (answer === right_answer) {
             console.log('Correct!')
             count_right_answers++
