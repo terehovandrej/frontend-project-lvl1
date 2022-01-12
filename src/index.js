@@ -36,6 +36,12 @@ const getProgressionWithSecret = () => {
     return result
 }
 
+const isPrime = num => {
+    for(let i = 2, s = Math.sqrt(num); i <= s; i++)
+        if(num % i === 0) return false;
+    return num > 1;
+}
+
 export const goGame = (gameType) => {
     const name = readlineSync.question('May I have your name? ');
     console.log(`Hello, ${name}!`)
@@ -74,6 +80,9 @@ export const goGame = (gameType) => {
             const question_and_answer = getProgressionWithSecret()
             question = question_and_answer[0]
             right_answer = String(question_and_answer[1])
+        } else if (gameType === 'brain-prime') {
+            question = getRandomInRange(0, 15)
+            isPrime(question) ? right_answer = 'yes' : right_answer = 'no'
         }
         console.log(`Question: ${question}`)
         let answer = readlineSync.question('Your answer: ');
