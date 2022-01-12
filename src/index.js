@@ -13,11 +13,11 @@ function evaluate(string) {
   const array = string.split(' ');
   let result = 0;
   if (array[1] === '+') {
-    result = array[0] + array[2];
+    result = Number(array[0]) + Number(array[2]);
   } else if (array[1] === '*') {
-    result = array[0] * array[2];
+    result = Number(array[0]) * Number(array[2]);
   } else if (array[1] === '-') {
-    result = array[0] - array[2];
+    result = Number(array[0]) - Number(array[2]);
   }
   return result;
 }
