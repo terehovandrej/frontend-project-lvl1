@@ -63,9 +63,9 @@ export const goGame = (gameType) => {
         if (gameType === 'brain-even') {
             question = getRandomInRange(0, 1000)
             if (question % 2 === 0) {
-                right_answer = 'yes'
-            } else if (question % 2 !== 0) {
                 right_answer = 'no'
+            } else if (question % 2 !== 0) {
+                right_answer = 'yes'
             }
         } else if (gameType === 'brain-calc') {
             question = getRandomArith()
