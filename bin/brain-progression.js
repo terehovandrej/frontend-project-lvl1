@@ -3,4 +3,4 @@
 import { goGame} from "../src/index.js";
 
 console.log('Welcome to the Brain Games!')
-goGame('brain-calc')
+goGame('brain-progression')

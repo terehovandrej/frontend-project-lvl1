@@ -1,17 +1,5 @@
 import readlineSync from "readline-sync";
 
-export const evenGame = () => {
-    goGame('brain-even')
-}
-
-export const calcGame = () => {
-    goGame('brain-calc')
-}
-
-export const gcdGame = () => {
-    goGame('brain-gcd')
-}
-
 function getRandomInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -29,6 +17,25 @@ const getNod = (a, b) => {
     return a
 }
 
+const getProgressionWithSecret = () => {
+    let progression_length = getRandomInRange(5, 15)
+    let first_progression_number = progression_length = getRandomInRange(0, 100)
+    let progression_step = getRandomInRange(3, 10)
+    let secret_index = getRandomInRange(0, progression_length)
+    const array = []
+    const result = []
+
+    for (let i = 0; i < progression_length; i++) {
+        array.push(first_progression_number)
+        first_progression_number+= progression_step
+    }
+    let secret = array[secret_index]
+    array[secret_index] = '..'
+    result.push(array)
+    result.push(secret)
+    return result
+}
+
 export const goGame = (gameType) => {
     const name = readlineSync.question('May I have your name? ');
     console.log(`Hello, ${name}!`)
@@ -38,6 +45,10 @@ export const goGame = (gameType) => {
         console.log('What is the result of the expression?')
     } else if (gameType === 'brain-gcd') {
         console.log('Find the greatest common divisor of given numbers.')
+    } else if (gameType === 'brain-progression') {
+        console.log('What number is missing in the progression?')
+    } else if (gameType === 'brain-prime') {
+        console.log('Answer "yes" if given number is prime. Otherwise answer "no".')
     }
     let count_right_answers = 0
     let question = ''
@@ -59,6 +70,11 @@ export const goGame = (gameType) => {
             question = `${a} ${b}`
             right_answer = String(getNod(a, b))
         }
+        else if (gameType === 'brain-progression') {
+            const question_and_answer = getProgressionWithSecret()
+            question = question_and_answer[0]
+            right_answer = String(question_and_answer[1])
+        }
         console.log(`Question: ${question}`)
         let answer = readlineSync.question('Your answer: ');
         if (answer === right_answer) {
@@ -73,4 +89,3 @@ export const goGame = (gameType) => {
     console.log(`Congratulations, ${name}!`)
 
 }
-

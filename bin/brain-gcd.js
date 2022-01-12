@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {gcdGame} from "../src/index.js";
+import { goGame} from "../src/index.js";
 
 console.log('Welcome to the Brain Games!')
-gcdGame()
+goGame('brain-gcd')
