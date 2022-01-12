@@ -93,7 +93,7 @@ export const goGame = (gameType) => {
         } else {
             count_right_answers = 0
             console.log(`'${answer}' is wrong answer ;(. Correct answer was '${right_answer}'.`)
-            console.log(`Let's try again, ${name}`)
+            console.log(`Let's try again, ${name}!`)
             break
         }
     }
