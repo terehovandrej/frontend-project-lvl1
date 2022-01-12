@@ -78,7 +78,7 @@ export const goGame = (gameType) => {
         }
         else if (gameType === 'brain-progression') {
             const question_and_answer = getProgressionWithSecret()
-            question = question_and_answer[0]
+            question = question_and_answer[0].join(' ')
             right_answer = String(question_and_answer[1])
         } else if (gameType === 'brain-prime') {
             question = getRandomInRange(0, 15)
