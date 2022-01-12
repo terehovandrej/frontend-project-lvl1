@@ -9,7 +9,22 @@ function getRandomArith() {
   return `${getRandomInRange(1, 10)} ${arith[getRandomInRange(0, 2)]} ${getRandomInRange(1, 10)}`;
 }
 
-const getNod = (a, b) => {
+function evaluate(string) {
+  const array = string.split(' ');
+  let result = 0;
+  if (array[1] === '+') {
+    result = array[0] + array[2];
+  } else if (array[1] === '*') {
+    result = array[0] * array[2];
+  } else if (array[1] === '-') {
+    result = array[0] - array[2];
+  }
+  return result;
+}
+
+const getNod = (first, second) => {
+  let a = first;
+  let b = second;
   while (a !== b) {
     if (a > b) a -= b;
     else b -= a;
@@ -18,30 +33,30 @@ const getNod = (a, b) => {
 };
 
 const getProgressionWithSecret = () => {
-  let progression_length = getRandomInRange(5, 15);
-  let first_progression_number = progression_length = getRandomInRange(0, 100);
-  const progression_step = getRandomInRange(3, 10);
-  const secret_index = getRandomInRange(0, progression_length);
+  const progressionLength = getRandomInRange(5, 15);
+  let firstProgressionNumber = getRandomInRange(0, 100);
+  const progressionStep = getRandomInRange(3, 10);
+  const secretIndex = getRandomInRange(0, progressionLength - 1);
   const array = [];
   const result = [];
 
-  for (let i = 0; i < progression_length; i++) {
-    array.push(first_progression_number);
-    first_progression_number += progression_step;
+  for (let i = 0; i < progressionLength; i += 1) {
+    array.push(firstProgressionNumber);
+    firstProgressionNumber += progressionStep;
   }
-  const secret = array[secret_index];
-  array[secret_index] = '..';
+  const secret = array[secretIndex];
+  array[secretIndex] = '..';
   result.push(array);
   result.push(secret);
   return result;
 };
 
 const isPrime = (num) => {
-  for (let i = 2, s = Math.sqrt(num); i <= s; i++) if (num % i === 0) return false;
+  for (let i = 2, s = Math.sqrt(num); i <= s; i += 1) if (num % i === 0) return false;
   return num > 1;
 };
 
-export const goGame = (gameType) => {
+export default (gameType) => {
   const name = readlineSync.question('May I have your name? ');
   console.log(`Hello, ${name}!`);
   if (gameType === 'brain-even') {
@@ -55,42 +70,46 @@ export const goGame = (gameType) => {
   } else if (gameType === 'brain-prime') {
     console.log('Answer "yes" if given number is prime. Otherwise answer "no".');
   }
-  let count_right_answers = 0;
+  let countRightAnswers = 0;
   let question = '';
-  let right_answer = '';
-  while (count_right_answers < 3) {
+  let rightAnswer = '';
+  while (countRightAnswers < 3) {
     if (gameType === 'brain-even') {
       question = getRandomInRange(0, 1000);
       if (question % 2 === 0) {
-        right_answer = 'yes';
+        rightAnswer = 'yes';
       } else if (question % 2 !== 0) {
-        right_answer = 'no';
+        rightAnswer = 'no';
       }
     } else if (gameType === 'brain-calc') {
       question = getRandomArith();
-      right_answer = String(eval(question));
+      rightAnswer = String(evaluate(question));
     } else if (gameType === 'brain-gcd') {
       const a = getRandomInRange(1, 100);
       const b = getRandomInRange(1, 100);
       question = `${a} ${b}`;
-      right_answer = String(getNod(a, b));
+      rightAnswer = String(getNod(a, b));
     } else if (gameType === 'brain-progression') {
-      const question_and_answer = getProgressionWithSecret();
-      question = question_and_answer[0].join(' ');
-      right_answer = String(question_and_answer[1]);
+      const questionAndAnswer = getProgressionWithSecret();
+      question = questionAndAnswer[0].join(' ');
+      rightAnswer = String(questionAndAnswer[1]);
     } else if (gameType === 'brain-prime') {
       question = getRandomInRange(0, 15);
-      isPrime(question) ? right_answer = 'yes' : right_answer = 'no';
+      if (isPrime(question)) {
+        rightAnswer = 'yes';
+      } else if (!isPrime(question)) {
+        rightAnswer = 'no';
+      }
     }
     console.log(`Question: ${question}`);
     const answer = readlineSync.question('Your answer: ');
     console.log(`${answer}`);
-    if (answer === right_answer) {
+    if (answer === rightAnswer) {
       console.log('Correct!');
-      count_right_answers++;
+      countRightAnswers += 1;
     } else {
-      count_right_answers = 0;
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${right_answer}'.`);
+      countRightAnswers = 0;
+      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${rightAnswer}'.`);
       console.log(`Let's try again, ${name}!`);
       break;
     }
